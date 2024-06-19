@@ -1,3 +1,10 @@
+# About
+
+In this self-driving demo you will experience neon database branching powering your dev and preview enviornments.
+Get Anna to add you to collaborators on Neon and GitHub and follow the steps below
+
+## Self Driving Demo
+
 ### Clone the repo and set up envrionemtns
 ```
 gh repo clone stepashka/neon-drizzle-test2
@@ -38,6 +45,6 @@ git push --set-upstream origin "$USER"_adds_country
 https://github.com/stepashka/neon-drizzle-test2/pull/new/"$USER"_adds_country
 ```
 
-TBD:
+## Further TODOs for this demo
 - figure out where to add the migration into production deployment (of the main branch) that is managed by cloudflare integration
 - add cleanup of deployments and branches on pr merge
