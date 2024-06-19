@@ -1,7 +1,8 @@
 # About
 
-In this self-driving demo you will experience neon database branching powering your dev and preview enviornments.
-Get Anna to add you to collaborators on Neon and GitHub and follow the steps below
+This is a self-driving demo of Neon + Drizzle + Cloudflare Pages + GitHub actions for Preview environments.
+This demonstrates how neon database branches can power your dev and rpeview environments.
+Follow the steps below to race through the demo.
 
 ## Self Driving Demo
 
@@ -48,7 +49,7 @@ npx wrangler pages dev
 git add drizzle/* src/*
 git commit -m "$USER adds countries"
 git push --set-upstream origin "$USER"_adds_country
-https://github.com/stepashka/neon-drizzle-test2/pull/new/"$USER"_adds_country
+open https://github.com/stepashka/neon-drizzle-test2/pull/new/"$USER"_adds_country
 ```
 
 ## Further TODOs for this demo
