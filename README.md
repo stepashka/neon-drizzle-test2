@@ -5,6 +5,12 @@ Get Anna to add you to collaborators on Neon and GitHub and follow the steps bel
 
 ## Self Driving Demo
 
+### Prerequisites
+1. You need to be added as collaborator for the project on Neon adn GitHub
+2. Execute the commands in your mac os terminal. This was only tested on Mac OS.
+3. You will have to have nodejs installed, e.g. `brew install node`
+4. GitHub ClI is optional, you can get away without it, but one of the commands uses it, you can install it with `brew install gh`
+
 ### Clone the repo and set up envrionemtns
 ```
 gh repo clone stepashka/neon-drizzle-test2
