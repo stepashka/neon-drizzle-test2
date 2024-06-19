@@ -11,7 +11,7 @@ Follow the steps below to race through the demo.
 2. you need to follow the link in GitHub's invite email to accept it.
 3. Execute the commands in your mac os terminal. This was only tested on Mac OS.
 4. You will have to have nodejs installed, e.g. `brew install node`
-5. GitHub ClI is optional, you can get away without it, but one of the commands uses it, you can install it with `brew install gh`
+5. GitHub CLI is optional, you can get away without it, but one of the commands uses it, install it with `brew install gh`
 
 ### Clone the repo and set up envrionemtns
 ```
