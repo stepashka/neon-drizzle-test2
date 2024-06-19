@@ -2,7 +2,7 @@
   "name": "neon-drizzle-test2",
   "scripts": {
     "dev": "npx tsx watch src/index.ts",
-    "build": "npx tsx src/index.ts",
+    "build": "npx tsx",
     "db:generate": "drizzle-kit generate --dialect=postgresql --schema=src/schema.ts --out=./drizzle",
     "db:migrate": "npx tsx ./src/migrate.ts",
     "db:seed": "npx tsx ./src/seed.ts"
@@ -12,7 +12,8 @@
     "@neondatabase/serverless": "^0.9.3",
     "drizzle-orm": "^0.31.2",
     "hono": "^4.4.7",
-    "neonctl": "^1.30.0"
+    "neonctl": "^1.30.0",
+    "typescript": "^5.4.5"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
