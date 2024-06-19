@@ -1,0 +1,63 @@
+name: Deploy Preview
+
+on: [pull_request]
+
+env:
+  NEON_DATABASE_USERNAME: ${{ secrets.PG_USERNAME }} # change this to your database username
+  NEON_DATABASE_NAME: ${{ secrets.PG_DATABASE }} # change this to your database name
+  GH_TOKEN: ${{ secrets.GH_TOKEN }} # Required for commenting on pull requests for private repos
+  NEON_API_KEY: ${{ secrets.NEON_API_KEY }} # You can generate a an API key in your account settings
+  NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }} # You can find this in your project settings
+
+jobs:
+  deploy-preview:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    name: Deploy Preview to Cloudflare Pages
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v8
+
+      - name: Create Neon Branch
+        id: create-branch
+        uses: neondatabase/create-branch-action@v5
+        with:
+          project_id: ${{ env.NEON_PROJECT_ID }}
+          # parent: dev # optional (defaults to your primary branch)
+          branch_name: preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }}
+          username: ${{ env.NEON_DATABASE_USERNAME }}
+          database: ${{ env.NEON_DATABASE_NAME }}
+          api_key: ${{ env.NEON_API_KEY }}
+
+      - name: Add the connection string to wrangler
+        id: add-neon-env-wrangler
+        run: |
+          echo "[vars]" >> wrangler.toml
+          echo "DATABASE_URL = \"${{ steps.create-branch.outputs.db_url_with_pooler }}\"" >> wrangler.toml
+
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+      - name: Install Project Dependencies
+        run: npm install
+      - name: Build the project
+        run: npm run build
+      
+      - name: Publish
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ vars.CLOUDFLARE_PROJECT_NAME }}
+          directory: 'dist'
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: Switch what branch you are publishing to.
+          # By default this will be the branch which triggered this workflow
+          branch: ${{ steps.branch-name.outputs.current_branch }}
+          # Optional: Change the working directory
+          # workingDirectory: dist
+          # Optional: Change the Wrangler version, allows you to point to a specific version or a tag such as `beta`
+          # wranglerVersion: '3'
