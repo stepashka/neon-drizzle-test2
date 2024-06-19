@@ -6,6 +6,7 @@ export const authors = pgTable('authors', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
   bio: text('bio'),
+  country: text('country'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
