@@ -2,7 +2,7 @@
   "name": "neon-drizzle-test2",
   "scripts": {
     "dev": "npx tsx watch src/index.ts",
-    "build": "npx tsx",
+    "build": "tsc",
     "db:generate": "drizzle-kit generate --dialect=postgresql --schema=src/schema.ts --out=./drizzle",
     "db:migrate": "npx tsx ./src/migrate.ts",
     "db:seed": "npx tsx ./src/seed.ts"
