@@ -7,10 +7,11 @@ Follow the steps below to race through the demo.
 ## Self Driving Demo
 
 ### Prerequisites
-1. You need to be added as collaborator for the project on Neon adn GitHub
-2. Execute the commands in your mac os terminal. This was only tested on Mac OS.
-3. You will have to have nodejs installed, e.g. `brew install node`
-4. GitHub ClI is optional, you can get away without it, but one of the commands uses it, you can install it with `brew install gh`
+1. You need to be added as collaborator for the project on Neon adn GitHub (ask Anna).
+2. you need to follow the link in GitHub's invite email to accept it.
+3. Execute the commands in your mac os terminal. This was only tested on Mac OS.
+4. You will have to have nodejs installed, e.g. `brew install node`
+5. GitHub ClI is optional, you can get away without it, but one of the commands uses it, you can install it with `brew install gh`
 
 ### Clone the repo and set up envrionemtns
 ```
