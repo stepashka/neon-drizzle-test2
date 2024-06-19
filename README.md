@@ -54,6 +54,8 @@ git push --set-upstream origin "$USER"_adds_country
 open https://github.com/stepashka/neon-drizzle-test2/pull/new/"$USER"_adds_country
 ```
 
+**Please do NOT merge the pull request: keep some fun for the others!**
+
 ## Further TODOs for this demo
 - figure out where to add the migration into production deployment (of the main branch) that is managed by cloudflare integration
 - add cleanup of deployments and branches on pr merge
