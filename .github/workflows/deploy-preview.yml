@@ -3,11 +3,11 @@ name: Deploy Preview
 on: [pull_request]
 
 env:
-  NEON_DATABASE_USERNAME: ${{ secrets.PG_USERNAME }} # change this to your database username
-  NEON_DATABASE_NAME: ${{ secrets.PG_DATABASE }} # change this to your database name
+  # NEON_DATABASE_USERNAME: ${{ secrets.PG_USERNAME }} # change this to your database username
+  # NEON_DATABASE_NAME: ${{ secrets.PG_DATABASE }} # change this to your database name
   GH_TOKEN: ${{ secrets.GH_TOKEN }} # Required for commenting on pull requests for private repos
   NEON_API_KEY: ${{ secrets.NEON_API_KEY }} # You can generate a an API key in your account settings
-  NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }} # You can find this in your project settings
+  # NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }} # You can find this in your project settings
 
 jobs:
   deploy-preview:
@@ -25,10 +25,10 @@ jobs:
         id: create-branch
         uses: neondatabase/create-branch-action@v5
         with:
-          project_id: ${{ env.NEON_PROJECT_ID }}
+          # project_id: ${{ env.NEON_PROJECT_ID }} # optional, can be specified in .neon file in project dir or
           # parent: previews_template # optional (defaults to your default branch)
           branch_name: preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }}
-          # username: ${{ env.NEON_DATABASE_USERNAME }} # optional and default to neondb_owner
+          # username: ${{ env.NEON_DATABASE_USERNAME }} # optional, defaults to a random role in a project, not needed for single-role projects
           # database: ${{ env.NEON_DATABASE_NAME }} # optional (defaults to neondb)
           api_key: ${{ env.NEON_API_KEY }}
 
