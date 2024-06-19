@@ -18,6 +18,7 @@ Follow the steps below to race through the demo.
 gh repo clone stepashka/neon-drizzle-test2
 cd neon-drizzle-test2/
 npm install
+npx neon auth
 ```
 
 ### Create a dev branch and add it to env variables for local use
