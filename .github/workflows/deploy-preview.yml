@@ -25,7 +25,7 @@ jobs:
         id: create-branch
         uses: neondatabase/create-branch-action@v5
         with:
-          project_id: ${{ env.NEON_PROJECT_ID }}
+          # project_id: ${{ env.NEON_PROJECT_ID }} # test picking up the project id from .neon file
           # parent: previews_template # optional (defaults to your default branch)
           branch_name: preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }}
           # username: ${{ env.NEON_DATABASE_USERNAME }} # optional and default to neondb_owner
