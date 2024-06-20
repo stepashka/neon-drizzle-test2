@@ -6,7 +6,6 @@ env:
   # NEON_DATABASE_USERNAME: ${{ secrets.PG_USERNAME }} # change this to your database username
   # NEON_DATABASE_NAME: ${{ secrets.PG_DATABASE }} # change this to your database name
   GH_TOKEN: ${{ secrets.GH_TOKEN }} # Required for commenting on pull requests for private repos
-  NEON_API_KEY: ${{ secrets.NEON_API_KEY }} # You can generate a an API key in your account settings
   # NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }} # You can find this in your project settings
 
 jobs:
@@ -30,7 +29,7 @@ jobs:
           branch_name: preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }}
           # username: ${{ env.NEON_DATABASE_USERNAME }} # optional, defaults to a random role in a project, not needed for single-role projects
           # database: ${{ env.NEON_DATABASE_NAME }} # optional (defaults to neondb)
-          api_key: ${{ env.NEON_API_KEY }}
+          api_key: ${{ secrets.NEON_API_KEY }} # Generate a an API key in your account settings
 
       - name: Add the connection string to wrangler
         id: add-neon-env-wrangler
@@ -44,8 +43,10 @@ jobs:
         run: npm install
         
       - name: Run Migrations
-        run: DATABASE_URL="${{ steps.create-branch.outputs.db_url_with_pooler }}" npm run db:migrate 
-        
+        run: npm run db:migrate 
+        env:
+          DATABASE_URL: "${{ steps.create-branch.outputs.db_url_with_pooler }}"
+
       - name: Build the project
         run: npm run build
       
