@@ -27,6 +27,7 @@ npx neon branches create --name dev/$USER
 echo DATABASE_URL= > .dev.vars
 sed -i '' "s|\(DATABASE_URL.*\)|DATABASE_URL=$(npx neon connection-string dev/$USER)|" .dev.vars
 ```
+Check out that branch was created on Neon console, there's data in it from the parent: https://console.neon.tech/app/projects/shiny-poetry-60171502/branches
 
 ### Run the project locally
 ```
@@ -40,6 +41,7 @@ sed -i '' 's|//country: text|country: text|' src/schema.ts
 npm run db:generate
 npm run db:migrate
 ```
+Inspect the content of your **dev** branch on Neon console: https://console.neon.tech/app/projects/shiny-poetry-60171502/branches
 
 ### Run the project locally and check that the /authors list now has the countries field
 ```
@@ -53,6 +55,7 @@ git commit -m "$USER adds countries"
 git push --set-upstream origin "$USER"_adds_country
 open https://github.com/stepashka/neon-drizzle-test2/pull/new/"$USER"_adds_country
 ```
+Identify the content of your **preview** branch on Neon console: https://console.neon.tech/app/projects/shiny-poetry-60171502/branches
 
 **Please do NOT merge the pull request: keep some fun for the others!**
 
