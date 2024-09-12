@@ -74,7 +74,6 @@ jobs:
 
       - name: Add neon console link to summary
         id: add_console_link
-https://console.neon.tech/app/projects/shiny-poetry-60171502/branches/br-holy-poetry-a5m4cyo4
         run: echo -e "| Neon Console | https://console.neon.tech/app/projects/'${{ env.NEON_PROJECT_ID }}/branches/'${{ steps.branch-name.outputs.branch_id }} |\n| " >> $GITHUB_STEP_SUMMARY
 
       - name: Schema diff
