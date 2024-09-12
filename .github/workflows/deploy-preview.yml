@@ -74,7 +74,7 @@ jobs:
 
       - name: Schema diff
         id: run_schema_diff
-        run: npx neonctl branches schema-diff main ${{ steps.branch-name.outputs.current_branch }} --api-key ${{ secrets.NEON_API_KEY }}
+        run: npx neonctl branches schema-diff main preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }} --api-key ${{ secrets.NEON_API_KEY }}
 
       - name: Comment on Pull Request
         id: add-comment
