@@ -75,10 +75,12 @@ jobs:
       - name: Add neon console link to summary
         id: add_console_link
         run: |
-          echo  "### Neon Workflow! :rocket: " >> $GITHUB_STEP_SUMMARY
+          echo  "# Neon Workflow! :rocket: " >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
-          echo "| Neon |  |\n| --- | --- |\n| Branch | https://console.neon.tech/app/projects/'${{ env.NEON_PROJECT_ID }}/branches/'${{ steps.branch-name.outputs.branch_id }} |\n| " >> $GITHUB_STEP_SUMMARY
+          echo "| Neon |  |\n| --- | --- |\n| Branch | https://console.neon.tech/app/projects/'${{ env.NEON_PROJECT_ID }}/branches/'${{ steps.branch-name.outputs.branch_id }} |" >> $GITHUB_STEP_SUMMARY
 
       - name: Schema diff
         id: run_schema_diff
-        run: (echo '```'; npx neonctl --no-color branches schema-diff main preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }} --api-key ${{ secrets.NEON_API_KEY }} ; echo '```') >> $GITHUB_STEP_SUMMARY
+        run: |
+          echo  "## Schema diff" >> $GITHUB_STEP_SUMMARY
+          (echo '```'; npx neonctl --no-color branches schema-diff main preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }} --api-key ${{ secrets.NEON_API_KEY }} ; echo '```') >> $GITHUB_STEP_SUMMARY
