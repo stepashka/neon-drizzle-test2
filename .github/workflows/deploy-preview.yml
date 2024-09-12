@@ -24,7 +24,7 @@ jobs:
         id: create-branch
         uses: neondatabase/create-branch-action@v5
         with:
-          # project_id: ${{ env.NEON_PROJECT_ID }} # optional, can be specified in .neon file in project dir or
+          # project_id: ${{ vars..NEON_PROJECT_ID }} # optional, can be specified in .neon file in project dir or
           # parent: previews_template # optional (defaults to your default branch)
           branch_name: preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }}
           # username: ${{ env.NEON_DATABASE_USERNAME }} # optional, defaults to a random role in a project, not needed for single-role projects
@@ -79,7 +79,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
           echo "| Neon |  |" >> $GITHUB_STEP_SUMMARY
           echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
-          echo "| Branch | https://console.neon.tech/app/projects/${{ env.NEON_PROJECT_ID }}/branches/${{ steps.create-branch.outputs.branch_id }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Branch | https://console.neon.tech/app/projects/${{ vars.NEON_PROJECT_ID }}/branches/${{ steps.create-branch.outputs.branch_id }} |" >> $GITHUB_STEP_SUMMARY
 
       - name: Schema diff
         id: run_schema_diff
