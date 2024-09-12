@@ -65,3 +65,18 @@ jobs:
           # workingDirectory: dist
           # Optional: Change the Wrangler version, allows you to point to a specific version or a tag such as `beta`
           # wranglerVersion: '3'
+
+      - name: Schema diff
+        id: run_shcema_diff
+        run: npx neonctl branches schema-diff main ${{ steps.branch-name.outputs.current_branch }}
+      
+      - name: Comment on Pull Request
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '${{join(steps.run_shcema_diff.outputs.*, '\n')}}'
+            })
