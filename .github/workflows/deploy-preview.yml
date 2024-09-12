@@ -74,4 +74,4 @@ jobs:
 
       - name: Schema diff
         id: run_schema_diff
-        run: (echo '```'; npx neonctl branches schema-diff main preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }} --api-key ${{ secrets.NEON_API_KEY }} --color false; echo '```') >> $GITHUB_STEP_SUMMARY
+        run: (echo '```'; npx neonctl --no-color branches schema-diff main preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }} --api-key ${{ secrets.NEON_API_KEY }} ; echo '```') >> $GITHUB_STEP_SUMMARY
