@@ -74,16 +74,4 @@ jobs:
 
       - name: Schema diff
         id: run_schema_diff
-        run: (echo '```'; npx neonctl --no-color branches schema-diff main preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }} --api-key ${{ secrets.NEON_API_KEY }} ; echo '```') >> $GITHUB_OUTPUT
-
-      - name: Comment on Pull Request
-        id: add-comment
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '${{steps.run_schema_diff.outputs.*}}'
-            })
+        run: (echo '```'; npx neonctl --no-color branches schema-diff main preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }} --api-key ${{ secrets.NEON_API_KEY }} ; echo '```') >> $GITHUB_STEP_SUMMARY
