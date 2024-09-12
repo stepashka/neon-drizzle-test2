@@ -73,16 +73,49 @@ jobs:
           # wranglerVersion: '3'
 
       - name: Add neon console link to summary
-        id: add_console_link
+        id: comment
         run: |
-          echo  "# Neon Workflow! :rocket: " >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
-          echo "| Neon |  |" >> $GITHUB_STEP_SUMMARY
-          echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
-          echo "| Branch | https://console.neon.tech/app/projects/${{ vars.NEON_PROJECT_ID }}/branches/${{ steps.create-branch.outputs.branch_id }} |" >> $GITHUB_STEP_SUMMARY
+          echo  "# Neon Workflow! :rocket: " >> file.md
+          echo "" >> file.md # this is a blank line
+          echo "| Neon |  |" >> file.md
+          echo "| --- | --- |" >> file.md
+          echo "| Branch | https://console.neon.tech/app/projects/${{ vars.NEON_PROJECT_ID }}/branches/${{ steps.create-branch.outputs.branch_id }} |" >> file.md
+          echo  "## Schema diff" >> file.md
+          (echo '```'; npx neonctl --no-color branches schema-diff main preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }} --api-key ${{ secrets.NEON_API_KEY }} ; echo '```') >> file.md
 
-      - name: Schema diff
-        id: run_schema_diff
-        run: |
-          echo  "## Schema diff" >> $GITHUB_STEP_SUMMARY
-          (echo '```'; npx neonctl --no-color branches schema-diff main preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }} --api-key ${{ secrets.NEON_API_KEY }} ; echo '```') >> $GITHUB_STEP_SUMMARY
+          cat file.md >> ${GITHUB_STEP_SUMMARY}
+
+      - name: Create comment with html report
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs')
+            const markdown = fs.readFileSync("./file.md")
+
+            // Some random UUID to identify the comment
+            const commentIdentifier = "<!-- 6db5c386-2d9f-4989-a2fb-296b6eea644a -->";
+
+            const { data: comments } = await github.rest.issues.listComments({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            const existingComment = comments.find(comment => comment.body.includes(commentIdentifier));
+            const body = `${commentIdentifier}\n${markdown}`
+
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                comment_id: existingComment.id,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body,
+              });
+            }
