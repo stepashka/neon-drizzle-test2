@@ -74,7 +74,7 @@ jobs:
 
       - name: Add neon console link to summary
         id: add_console_link
-        run: echo -e "| Neon Console | https://console.neon.tech/app/projects/'${{ env.NEON_PROJECT_ID }}/branches/'${{ steps.branch-name.outputs.branch_id }} |\n| " >> $GITHUB_STEP_SUMMARY
+        run: echo -e "| Neon |  |\n| --- | --- |\n| Branch | https://console.neon.tech/app/projects/'${{ env.NEON_PROJECT_ID }}/branches/'${{ steps.branch-name.outputs.branch_id }} |\n| " >> $GITHUB_STEP_SUMMARY
 
       - name: Schema diff
         id: run_schema_diff
