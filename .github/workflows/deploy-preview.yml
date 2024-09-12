@@ -38,19 +38,25 @@ jobs:
           echo "DATABASE_URL = \"${{ steps.create-branch.outputs.db_url_with_pooler }}\"" >> wrangler.toml
 
       - name: Setup Node.js
+        id: setup-node-js
         uses: actions/setup-node@v4
+        
       - name: Install Dependencies
+        id: install-deps
         run: npm install
         
       - name: Run Migrations
+        id: run-miggrations
         run: npm run db:migrate 
         env:
           DATABASE_URL: "${{ steps.create-branch.outputs.db_url_with_pooler }}"
 
       - name: Build the project
+        id: build-project
         run: npm run build
       
       - name: Publish
+        id: publish-to-cf
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -65,3 +71,7 @@ jobs:
           # workingDirectory: dist
           # Optional: Change the Wrangler version, allows you to point to a specific version or a tag such as `beta`
           # wranglerVersion: '3'
+
+      - name: Schema diff
+        id: run_schema_diff
+        run: (echo '```'; npx neonctl --no-color branches schema-diff main preview/pr-${{ github.event.number }}-${{ steps.branch-name.outputs.current_branch }} --api-key ${{ secrets.NEON_API_KEY }} ; echo '```') >> $GITHUB_STEP_SUMMARY
